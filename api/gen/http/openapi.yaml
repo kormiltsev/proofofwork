@@ -1,0 +1,264 @@
+swagger: "2.0"
+info:
+    title: Word of Wosdom
+    description: RESTful API for Word of Wisdom service.
+    version: "1.0"
+host: localhost:8080
+consumes:
+    - application/json
+    - application/xml
+    - application/gob
+produces:
+    - application/json
+    - application/xml
+    - application/gob
+paths:
+    /words:
+        get:
+            tags:
+                - words
+            summary: Request for new quote, returns task
+            description: First step for new quote, returns task
+            operationId: words#request
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/WordsRequestOKResponseBody'
+                "400":
+                    description: Bad Request response.
+                    schema:
+                        $ref: '#/definitions/WordsRequestBadRequestResponseBody'
+                "401":
+                    description: Unauthorized response.
+                    schema:
+                        $ref: '#/definitions/WordsRequestUnauthorizedResponseBody'
+                "403":
+                    description: Forbidden response.
+                    schema:
+                        $ref: '#/definitions/WordsRequestForbiddenResponseBody'
+                "500":
+                    description: Internal Server Error response.
+                    schema:
+                        $ref: '#/definitions/WordsRequestInternalResponseBody'
+            schemes:
+                - https
+        post:
+            tags:
+                - words
+            summary: Return smartypents quote
+            description: Returns smartypents quote
+            operationId: words#words
+            produces:
+                - application/json
+            parameters:
+                - name: WordsRequestBody
+                  in: body
+                  required: true
+                  schema:
+                    $ref: '#/definitions/WordsWordsRequestBody'
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/WordsWordsOKResponseBody'
+                "400":
+                    description: Bad Request response.
+                    schema:
+                        $ref: '#/definitions/WordsWordsBadRequestResponseBody'
+                "403":
+                    description: Forbidden response.
+                    schema:
+                        $ref: '#/definitions/WordsWordsForbiddenResponseBody'
+                "500":
+                    description: Internal Server Error response.
+                    schema:
+                        $ref: '#/definitions/WordsWordsInternalResponseBody'
+            schemes:
+                - https
+definitions:
+    WordsRequestBadRequestResponseBody:
+        title: 'Mediatype identifier: application/vnd.bad.request.error+json; view=default'
+        type: object
+        properties:
+            attributes:
+                type: string
+                description: Message attributes
+                example: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+                format: binary
+            msg:
+                type: string
+                description: Detailed error message
+                example: JWT token has expired.
+            msgCode:
+                type: string
+                description: Key to select a localized message
+                example: JWT_TOKEN_EXPIRED
+        description: is a common error response for bad request (default view)
+        example:
+            attributes: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+            msg: JWT token has expired.
+            msgCode: JWT_TOKEN_EXPIRED
+        required:
+            - msg
+            - msgCode
+    WordsRequestForbiddenResponseBody:
+        title: 'Mediatype identifier: application/vnd.words.task+json; view=default'
+        type: object
+        properties:
+            difficulty:
+                type: integer
+                description: Target difficulty
+                example: 4
+                format: int64
+            hash:
+                type: string
+                description: Previous hash
+                example: 006b848c0e6dc6f33b76ec211a7405a5e64d2889df511b8188f1489612bfabc2
+        description: RequestForbiddenResponseBody result type (default view)
+        example:
+            difficulty: 4
+            hash: 006b848c0e6dc6f33b76ec211a7405a5e64d2889df511b8188f1489612bfabc2
+    WordsRequestInternalResponseBody:
+        title: 'Mediatype identifier: application/vnd.internal.error+json; view=default'
+        type: object
+        properties:
+            attributes:
+                type: string
+                description: Message attributes
+                example: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+                format: binary
+            msg:
+                type: string
+                description: Detailed error message
+                example: JWT token has expired.
+            msgCode:
+                type: string
+                description: Key to select a localized message
+                example: JWT_TOKEN_EXPIRED
+        description: is a common error response for internal error (default view)
+        example:
+            attributes: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+            msg: JWT token has expired.
+            msgCode: JWT_TOKEN_EXPIRED
+        required:
+            - msg
+            - msgCode
+    WordsRequestOKResponseBody:
+        title: 'Mediatype identifier: application/vnd.words.task+json; view=default'
+        type: object
+        properties:
+            difficulty:
+                type: integer
+                description: Target difficulty
+                example: 4
+                format: int64
+            hash:
+                type: string
+                description: Previous hash
+                example: 006b848c0e6dc6f33b76ec211a7405a5e64d2889df511b8188f1489612bfabc2
+        description: RequestOKResponseBody result type (default view)
+        example:
+            difficulty: 4
+            hash: 006b848c0e6dc6f33b76ec211a7405a5e64d2889df511b8188f1489612bfabc2
+    WordsRequestUnauthorizedResponseBody:
+        title: 'Mediatype identifier: application/vnd.words.task+json; view=default'
+        type: object
+        properties:
+            difficulty:
+                type: integer
+                description: Target difficulty
+                example: 4
+                format: int64
+            hash:
+                type: string
+                description: Previous hash
+                example: 006b848c0e6dc6f33b76ec211a7405a5e64d2889df511b8188f1489612bfabc2
+        description: RequestUnauthorizedResponseBody result type (default view)
+        example:
+            difficulty: 4
+            hash: 006b848c0e6dc6f33b76ec211a7405a5e64d2889df511b8188f1489612bfabc2
+    WordsWordsBadRequestResponseBody:
+        title: 'Mediatype identifier: application/vnd.bad.request.error+json; view=default'
+        type: object
+        properties:
+            attributes:
+                type: string
+                description: Message attributes
+                example: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+                format: binary
+            msg:
+                type: string
+                description: Detailed error message
+                example: JWT token has expired.
+            msgCode:
+                type: string
+                description: Key to select a localized message
+                example: JWT_TOKEN_EXPIRED
+        description: is a common error response for bad request (default view)
+        example:
+            attributes: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+            msg: JWT token has expired.
+            msgCode: JWT_TOKEN_EXPIRED
+        required:
+            - msg
+            - msgCode
+    WordsWordsForbiddenResponseBody:
+        title: 'Mediatype identifier: application/vnd.words.result+json; view=default'
+        type: object
+        properties:
+            quote:
+                type: string
+                description: Words of wisdome
+                example: Life is too short to remove USB safely
+        description: WordsForbiddenResponseBody result type (default view)
+        example:
+            quote: Life is too short to remove USB safely
+    WordsWordsInternalResponseBody:
+        title: 'Mediatype identifier: application/vnd.internal.error+json; view=default'
+        type: object
+        properties:
+            attributes:
+                type: string
+                description: Message attributes
+                example: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+                format: binary
+            msg:
+                type: string
+                description: Detailed error message
+                example: JWT token has expired.
+            msgCode:
+                type: string
+                description: Key to select a localized message
+                example: JWT_TOKEN_EXPIRED
+        description: is a common error response for internal error (default view)
+        example:
+            attributes: '{"entityId":"xxxx-xxxx-xxxx-xxxx"}'
+            msg: JWT token has expired.
+            msgCode: JWT_TOKEN_EXPIRED
+        required:
+            - msg
+            - msgCode
+    WordsWordsOKResponseBody:
+        title: 'Mediatype identifier: application/vnd.words.result+json; view=default'
+        type: object
+        properties:
+            quote:
+                type: string
+                description: Words of wisdome
+                example: Life is too short to remove USB safely
+        description: WordsOKResponseBody result type (default view)
+        example:
+            quote: Life is too short to remove USB safely
+    WordsWordsRequestBody:
+        title: WordsWordsRequestBody
+        type: object
+        properties:
+            solution:
+                type: string
+                description: Solution block
+                example: Praesentium cumque omnis.
+        example:
+            solution: Nemo eius fuga aliquam commodi.
