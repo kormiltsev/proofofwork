@@ -13,4 +13,4 @@ WORKDIR /
 RUN apk add fortune
 COPY --from=builder /app/word-of-wisdom .
 EXPOSE 8080
-CMD ["/word-of-wisdom", "run"]do
+CMD ["/word-of-wisdom", "run"]

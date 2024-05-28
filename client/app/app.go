@@ -13,6 +13,7 @@ import (
 
 var hardcodeedClientID = "client"
 
+// OneRequest make one request to get task, solve and send solution to get more wisdom.
 func OneRequest(targeturl string) error {
 	req, err := client.Get(targeturl)
 	if err != nil {
@@ -37,15 +38,15 @@ func OneRequest(targeturl string) error {
 	return nil
 }
 
+// Endless is a loop. Requests for task, solve and send resulution to get more wisdome.
 func Endless(targeturl string) error {
 	t, _ := tomb.WithContext(context.Background())
-	for i := 0; i < 5; i++ {
-		t.Go(func() error { return worker(targeturl) })
-	}
+	t.Go(func() error { return worker(targeturl) })
 	<-t.Dead()
 	return nil
 }
 
+// a loop
 func worker(targeturl string) (err error) {
 	for {
 		if err = OneRequest(targeturl); err != nil {
@@ -54,6 +55,11 @@ func worker(targeturl string) (err error) {
 	}
 }
 
+// output the result
 func printResult(result string) {
-	fmt.Printf("\nresult: ========================================================\n%s", result)
+	if result == "" {
+		fmt.Printf("\n🔴 no results\n")
+		return
+	}
+	fmt.Printf("\nresult: ========================================================\n%s\n", result)
 }

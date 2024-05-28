@@ -9,6 +9,7 @@ import (
 	"github.com/kormiltsev/proofofwork/config"
 )
 
+// Runs a client part of application
 var Command = cli.Command{
 	Name:  "client",
 	Usage: "Request the Words of Wisdom",

@@ -6,12 +6,15 @@ import (
 	"os/exec"
 )
 
+// QuoteService imitate some job after proof.
 type QuoteService struct{}
 
+// New returns job service.
 func New() *QuoteService {
 	return &QuoteService{}
 }
 
+// GetQuote returns a piece wisdom.
 func (q *QuoteService) GetQuote(ctx context.Context) string {
 	cmd := exec.CommandContext(ctx, "fortune")
 

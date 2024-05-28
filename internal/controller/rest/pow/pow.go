@@ -4,19 +4,20 @@ import (
 	"context"
 	"fmt"
 
-	"gopkg.in/tomb.v2"
-
 	"github.com/inconshreveable/log15"
+	"gopkg.in/tomb.v2"
 
 	goasvc "github.com/kormiltsev/proofofwork/api/gen/words"
 	"github.com/kormiltsev/proofofwork/internal/utils"
 )
 
+// Pow is a service to proof a work.
 type Pow interface {
 	NewTask() (string, int, error)
 	Validate(string) (bool, error)
 }
 
+// Job makes some job after proof-of-work.
 type Job interface {
 	GetQuote(context.Context) string
 }
@@ -40,6 +41,7 @@ func NewController(t *tomb.Tomb, pow Pow, job Job) *Controller {
 	}
 }
 
+// Request is first step. Returns Task.
 func (c *Controller) Request(_ context.Context) (*goasvc.WordsTask, error) {
 	request, diff, err := c.pow.NewTask()
 	if err != nil {
@@ -54,8 +56,8 @@ func (c *Controller) Request(_ context.Context) (*goasvc.WordsTask, error) {
 	return &res, nil
 }
 
+// Words validates the solution and returns job's result.
 func (c *Controller) Words(ctx context.Context, p *goasvc.WordsPayload) (*goasvc.WordsResult, error) {
-	c.log.Debug("Words get arguments:", "p.Solution", p.Solution, "utils.StringUnref(p.Solution)", utils.StringUnref(p.Solution))
 	approved, err := c.pow.Validate(utils.StringUnref(p.Solution))
 	if err != nil {
 		c.log.Error("validation failed", "err", err)

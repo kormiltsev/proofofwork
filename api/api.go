@@ -22,7 +22,7 @@ import (
 	powsc "github.com/kormiltsev/proofofwork/internal/service/pow"
 )
 
-// Run executes the service
+// Run executes the service words of wosdome as REST API
 func Run(ctx context.Context, t *tomb.Tomb, httpListener net.Listener) error {
 	var err error
 	httpParams := runParameters{

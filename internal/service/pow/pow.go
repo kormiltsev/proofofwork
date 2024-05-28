@@ -4,16 +4,12 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"fmt"
-	"log"
 	"math"
 	"math/big"
 	"time"
 
 	"github.com/kormiltsev/proofofwork/internal/utils"
 )
-
-// ProofOfWork represents a proof-of-work service.
-type ProofOfWorkClient struct{}
 
 // Block is for one time validation.
 type Block struct {
@@ -24,6 +20,7 @@ type Block struct {
 	Nonce         int
 }
 
+// NewBlock prepare and return a new block.
 func NewBlock(data string, prevBlockHash []byte) *Block {
 	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, 0}
 	block, err := block.Run(0)
@@ -35,23 +32,7 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 	return block
 }
 
-func NewClient() *ProofOfWorkClient {
-	return &ProofOfWorkClient{}
-}
-
-func (pow *ProofOfWorkClient) Solve(data string, prevHash []byte, difficulty int) *Block {
-	block := Block{time.Now().Unix(), []byte(data), prevHash, []byte{}, 0}
-	newblock, err := block.Run(difficulty)
-	if err != nil {
-		log.Println("solve error:", err)
-		data := block.prepareData(0, difficulty)
-		hash := sha256.Sum256(data)
-		block.Hash = hash[:]
-	}
-	return newblock
-}
-
-// Run performs a proof-of-work
+// Run performs a proof-of-work.
 func (block *Block) Run(difficulty int) (*Block, error) {
 	var hashInt big.Int
 	var hash [32]byte

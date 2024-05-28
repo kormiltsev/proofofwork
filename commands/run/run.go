@@ -13,6 +13,7 @@ import (
 	"github.com/kormiltsev/proofofwork/config"
 )
 
+// Runs server
 var Command = cli.Command{
 	Name:  "run",
 	Usage: "Run the Words of Wisdom API",
@@ -23,6 +24,20 @@ var Command = cli.Command{
 			EnvVar:      "POW_SOCKET",
 			Value:       ":8080",
 			Destination: &config.Host,
+		},
+		cli.IntFlag{
+			Name:        "initial-difficulty",
+			Usage:       "Server will starts with this difficulty",
+			EnvVar:      "POW_INITIAL_DIFFICULTY",
+			Value:       16,
+			Destination: &config.Difficulty,
+		},
+		cli.IntFlag{
+			Name:        "cache-limit",
+			Usage:       "Limits size of requests kept in memory",
+			EnvVar:      "POW_CACHE_LIMIT",
+			Value:       1000,
+			Destination: &config.Limit,
 		},
 	},
 	Action: func(c *cli.Context) error {

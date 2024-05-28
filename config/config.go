@@ -6,4 +6,10 @@ var (
 
 	// URL is used by client.
 	URL string
+
+	// Difficulty is default difficulty.
+	Difficulty int
+
+	// Limit limits size of requests in memory.
+	Limit int
 )

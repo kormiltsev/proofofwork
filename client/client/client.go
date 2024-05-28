@@ -8,19 +8,23 @@ import (
 	"net/http"
 )
 
+// Task represents a task from server.
 type Task struct {
 	Difficulty int    `json:"difficulty"`
 	Hash       string `json:"hash"`
 }
 
+// Words is a finnal result.
 type Words struct {
 	Quote string `json:"quote"`
 }
 
+// Solution represents answer to server.
 type Solution struct {
 	Solution string `json:"solution"`
 }
 
+// Get sends first request to server and returns a task.
 func Get(url string) (*Task, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -44,6 +48,7 @@ func Get(url string) (*Task, error) {
 	return &task, nil
 }
 
+// Post sends a result to get wisdom from server.
 func Post(url string, data []byte) (string, error) {
 	payload := Solution{string(data)}
 
