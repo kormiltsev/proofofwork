@@ -2,6 +2,10 @@
 
 Simple implementation of proof-of-work algorithm to limit request per second. To get a piece of wisdom (make server do some work) the client app solving task based on data recieved from server. 
 
+[![Go Version](https://img.shields.io/badge/Go-v1.19-blue)](https://golang.org/dl/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/kormiltsev/proofofwork)](https://goreportcard.com/report/github.com/kormiltsev/proofofwork)
+[![License](https://img.shields.io/github/license/kormiltsev/proofofwork)](https://github.com/kormiltsev/proofofwork/blob/main/LICENSE)
+
 Final result is random quote like this:
 
 ```
