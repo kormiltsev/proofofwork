@@ -92,4 +92,4 @@ to discuss what you would like to change.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+GoFM is released under the [MIT License](https://github.com/kormiltsev/proofofwork/blob/main/LICENSE). Feel free to use, modify, and distribute the software.
